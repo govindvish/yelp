@@ -1,7 +1,11 @@
+const db = require('../db');
+
 // @desc    Get all restaurants
 // @route   GET /api/v1/restaurants
 // @access  Public
-exports.getAllRestaurants = (req, res, next) => {
+exports.getAllRestaurants = async (req, res, next) => {
+  const data = await db.query('SELECT * from restaurants');
+  console.log(data);
   res.send('Get all restaurants.');
 };
 
