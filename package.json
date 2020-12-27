@@ -1,7 +1,7 @@
 {
   "name": "yelp",
   "version": "1.0.0",
-  "description": "",
+  "description": "An app to learn PERN stack.",
   "main": "server.js",
   "scripts": {
     "start": "node server",

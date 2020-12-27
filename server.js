@@ -4,9 +4,11 @@ const colors = require('colors');
 
 dotenv.config({ path: './config/config.env' });
 
+const restaurants = require('./routes/restaurants');
+
 const app = express();
 
-app.get('/', (req, res) => res.send('Hello'));
+app.use('/api/v1/restaurants', restaurants);
 
 const PORT = process.env.PORT || 5000;
 
