@@ -4,9 +4,20 @@ const db = require('../db');
 // @route   GET /api/v1/restaurants
 // @access  Public
 exports.getAllRestaurants = async (req, res, next) => {
-  const data = await db.query('SELECT * from restaurants');
-  console.log(data);
-  res.send('Get all restaurants.');
+  try {
+    const data = await db.query('SELECT * from restaurants');
+    const { rows } = data;
+    res.status(200).json({
+      success: true,
+      count: rows.length,
+      data: rows,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: 'Server Error.',
+    });
+  }
 };
 
 // @desc    Get restaurant by ID
