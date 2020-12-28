@@ -7,13 +7,13 @@ exports.getAllRestaurants = async (req, res, next) => {
   try {
     const data = await db.query('SELECT * from restaurants');
     const { rows } = data;
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       count: rows.length,
       data: rows,
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Server Error.',
     });
@@ -23,8 +23,30 @@ exports.getAllRestaurants = async (req, res, next) => {
 // @desc    Get restaurant by ID
 // @route   GET /api/v1/restaurants/:id
 // @access  Public
-exports.getRestaurant = (req, res, next) => {
-  res.send('Get restaurant by ID.');
+exports.getRestaurant = async (req, res, next) => {
+  try {
+    const data = await db.query(
+      `SELECT * from restaurants where id=${req.params.id}`
+    );
+    const { rows } = data;
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        data: rows,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: rows && rows[0],
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error.',
+    });
+  }
 };
 
 // @desc    Add a restaurant.
