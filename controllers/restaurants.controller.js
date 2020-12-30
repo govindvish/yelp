@@ -52,8 +52,23 @@ exports.getRestaurant = async (req, res, next) => {
 // @desc    Add a restaurant.
 // @route   POST /api/v1/restaurants
 // @access  Public
-exports.addRestaurant = (req, res, next) => {
-  res.send('Add a restaurant.');
+exports.addRestaurant = async (req, res, next) => {
+  try {
+    const data = await db.query(
+      `INSERT INTO restaurants (name, location, price_range) values ($1, $2, $3) returning *`,
+      [req.body.name, req.body.location, req.body.price_range]
+    );
+    const { rows } = data;
+    return res.status(201).json({
+      success: true,
+      data: rows && rows[0],
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error.',
+    });
+  }
 };
 
 // @desc    Update restaurant by ID

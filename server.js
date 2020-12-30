@@ -8,6 +8,9 @@ const restaurants = require('./routes/restaurants');
 
 const app = express();
 
+// To use Body parser middleware
+app.use(express.json());
+
 app.use('/api/v1/restaurants', restaurants);
 
 const PORT = process.env.PORT || 5000;
