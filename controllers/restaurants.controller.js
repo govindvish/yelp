@@ -74,8 +74,23 @@ exports.addRestaurant = async (req, res, next) => {
 // @desc    Update restaurant by ID
 // @route   PUT /api/v1/restaurants/:id
 // @access  Public
-exports.updateRestaurant = (req, res, next) => {
-  res.send('Update restaurant by ID.');
+exports.updateRestaurant = async (req, res, next) => {
+  try {
+    const data = await db.query(
+      `UPDATE restaurants SET name=$1, location=$2, price_range=$3 where id=$4 returning *`,
+      [req.body.name, req.body.location, req.body.price_range, req.params.id]
+    );
+    const { rows } = data;
+    return res.status(200).json({
+      success: true,
+      data: rows && rows[0],
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error.',
+    });
+  }
 };
 
 // @desc    Delete restaurant by ID
