@@ -96,6 +96,21 @@ exports.updateRestaurant = async (req, res, next) => {
 // @desc    Delete restaurant by ID
 // @route   DELETE /api/v1/restaurants/:id
 // @access  Public
-exports.deleteRestaurant = (req, res, next) => {
-  res.send('Delete restaurant by ID.');
+exports.deleteRestaurant = async (req, res, next) => {
+  try {
+    const data = await db.query(`DELETE from restaurants where id=$1`, [
+      req.params.id,
+    ]);
+    const { rows } = data;
+
+    return res.status(204).json({
+      success: true,
+      data: rows && rows[0],
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error.',
+    });
+  }
 };
