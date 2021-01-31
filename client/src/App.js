@@ -6,21 +6,25 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Home from './containers/Home';
-import RestaurantDetails from './containers/RestaurantDetails';
-import Restaurants from './containers/Restaurants';
+import RestaurantUpdatePage from './containers/RestaurantUpdatePage';
+import RestaurantDetailsPage from './containers/RestaurantDetailsPage';
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route
             exact
             path="/restaurants/:id/update"
-            component={RestaurantDetails}
+            component={RestaurantUpdatePage}
           />
-          <Route exact path="/restaurants/:id" component={Restaurants} />
+          <Route
+            exact
+            path="/restaurants/:id"
+            component={RestaurantDetailsPage}
+          />
           <Redirect to="/" />
         </Switch>
       </Router>
