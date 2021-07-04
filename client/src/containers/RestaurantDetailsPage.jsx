@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import RestaurantFinder from '../apis/RestaurantFinder';
 import Reviews from '../components/Reviews';
+import AddReview from '../components/AddReview';
 import { RestaurantsContext } from '../context/RestaurantsContext';
 
 const RestaurantDetailsPage = (props) => {
@@ -30,6 +31,7 @@ const RestaurantDetailsPage = (props) => {
           <div className='mt-3'>
             <Reviews />
           </div>
+          <AddReview />
         </>
       )}
     </div>
