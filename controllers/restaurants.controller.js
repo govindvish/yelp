@@ -30,6 +30,10 @@ exports.getRestaurant = async (req, res, next) => {
     );
     const { rows } = data;
 
+    const reviews = await db.query(
+      `SELECT * from reviews where restaurant_id=${req.params.id}`
+    );
+
     if (rows.length === 0) {
       return res.status(404).json({
         success: false,
@@ -40,6 +44,7 @@ exports.getRestaurant = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       data: rows && rows[0],
+      reviews: reviews.rows,
     });
   } catch (err) {
     return res.status(500).json({
