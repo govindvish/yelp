@@ -1,25 +1,27 @@
 import React from 'react';
 import StarRatings from './StarRatings';
 
-const Reviews = (props) => {
+const Reviews = ({ reviews }) => {
   return (
     <>
-      <div className='row row-cols-3 mb-2'>
-        <div
-          className='card text-white bg-primary mb-3 mr-4'
-          style={{ maxWidth: '30%' }}
-        >
-          <div className='card-header d-flex justify-content-between'>
-            <span>Joan</span>
-            <span>
-              <StarRatings rating={3} />
-            </span>
-          </div>
-          <div className='card-body'>
-            <p className='card-text'>Awesome</p>
+      {reviews.map((review) => (
+        <div className='row row-cols-3 mb-2' key={review.id}>
+          <div
+            className='card text-white bg-primary mb-3 mr-4'
+            style={{ maxWidth: '30%' }}
+          >
+            <div className='card-header d-flex justify-content-between'>
+              <span>{review.name}</span>
+              <span>
+                <StarRatings rating={review.rating} />
+              </span>
+            </div>
+            <div className='card-body'>
+              <p className='card-text'>{review.review}</p>
+            </div>
           </div>
         </div>
-      </div>
+      ))}
     </>
   );
 };

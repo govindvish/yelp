@@ -43,8 +43,10 @@ exports.getRestaurant = async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      data: rows && rows[0],
-      reviews: reviews.rows,
+      data: {
+        restaurant: rows[0],
+        reviews: reviews.rows,
+      },
     });
   } catch (err) {
     return res.status(500).json({
