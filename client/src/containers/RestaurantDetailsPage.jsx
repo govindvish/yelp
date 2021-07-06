@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import RestaurantFinder from '../apis/RestaurantFinder';
@@ -10,11 +10,12 @@ const RestaurantDetailsPage = (props) => {
   const { id } = useParams();
   const { selectedRestaurant, setSelectedRestaurant } =
     useContext(RestaurantsContext);
+  const [reRenderDetails, setReRenderDetails] = useState(false);
 
   useEffect(() => {
     getRestaurant();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reRenderDetails]);
 
   const getRestaurant = async () => {
     try {
@@ -35,7 +36,7 @@ const RestaurantDetailsPage = (props) => {
           <div className='mt-3'>
             <Reviews reviews={selectedRestaurant.reviews} />
           </div>
-          <AddReview />
+          <AddReview setReRenderDetails={setReRenderDetails} />
         </>
       )}
     </div>

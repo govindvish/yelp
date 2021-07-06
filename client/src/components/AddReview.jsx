@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import RestaurantFinder from '../apis/RestaurantFinder';
 
-const AddReview = () => {
+const AddReview = ({ setReRenderDetails }) => {
+  const { id } = useParams();
   const [name, setName] = useState('');
   const [rating, setRating] = useState('');
   const [review, setReview] = useState('');
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const response = await RestaurantFinder.post(`/${id}/addReview`, {
+        name,
+        rating,
+        review,
+      });
+      setName('');
+      setRating('');
+      setReview('');
+      setReRenderDetails(true);
+    } catch (err) {}
+  };
+
   return (
     <>
       <div className='mb-2'>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className='form-row'>
             <div className='form-group col-8'>
               <label htmlFor='name'>Name</label>

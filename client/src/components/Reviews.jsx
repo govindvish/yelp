@@ -2,13 +2,15 @@ import React from 'react';
 import StarRatings from './StarRatings';
 
 const Reviews = ({ reviews }) => {
+  console.log('reviews', reviews);
   return (
     <>
-      {reviews.map((review) => (
-        <div className='row row-cols-3 mb-2' key={review.id}>
+      <div className='row row-cols-3 mb-2' style={{ marginLeft: 0 }}>
+        {reviews.map((review) => (
           <div
             className='card text-white bg-primary mb-3 mr-4'
             style={{ maxWidth: '30%' }}
+            key={review.id}
           >
             <div className='card-header d-flex justify-content-between'>
               <span>{review.name}</span>
@@ -20,8 +22,8 @@ const Reviews = ({ reviews }) => {
               <p className='card-text'>{review.review}</p>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </>
   );
 };
