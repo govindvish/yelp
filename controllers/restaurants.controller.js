@@ -121,3 +121,25 @@ exports.deleteRestaurant = async (req, res, next) => {
     });
   }
 };
+
+// @desc    Add a review.
+// @route   POST /api/v1/restaurants/:id/addReview
+// @access  Public
+exports.addReview = async (req, res, next) => {
+  try {
+    const data = await db.query(
+      `INSERT INTO reviews (restaurant_id, name, review, rating) values ($1, $2, $3, $4) returning *`,
+      [req.params.id, req.body.name, req.body.review, req.body.rating]
+    );
+    const { rows } = data;
+    return res.status(201).json({
+      success: true,
+      data: rows && rows[0],
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error.',
+    });
+  }
+};
