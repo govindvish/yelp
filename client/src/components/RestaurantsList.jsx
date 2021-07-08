@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import RestaurantFinder from '../apis/RestaurantFinder';
+import StarRatings from './StarRatings';
 import { RestaurantsContext } from '../context/RestaurantsContext';
 
 const RestaurantsList = () => {
@@ -69,7 +70,18 @@ const RestaurantsList = () => {
                 <td>{restaurant.name}</td>
                 <td>{restaurant.location}</td>
                 <td>{`$`.repeat(restaurant.price_range)}</td>
-                <td>Rating</td>
+                <td>
+                  {restaurant.count ? (
+                    <>
+                      <StarRatings rating={restaurant.average_rating} />
+                      <span className='text-warning ml-1'>
+                        ({restaurant.count})
+                      </span>
+                    </>
+                  ) : (
+                    <span className='text-warning ml-1'>No Reviews</span>
+                  )}
+                </td>
                 <td>
                   <button
                     className='btn btn-warning'
