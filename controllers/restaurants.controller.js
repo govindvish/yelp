@@ -5,7 +5,10 @@ const db = require('../db');
 // @access  Public
 exports.getAllRestaurants = async (req, res, next) => {
   try {
-    const data = await db.query('SELECT * from restaurants');
+    // const data = await db.query('SELECT * from restaurants');
+    const data = await db.query(
+      'SELECT * from restaurants left join (select restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) as average_rating from reviews group by restaurant_id) reviews on restaurants.id = reviews.restaurant_id'
+    );
     const { rows } = data;
     return res.status(200).json({
       success: true,
@@ -25,8 +28,11 @@ exports.getAllRestaurants = async (req, res, next) => {
 // @access  Public
 exports.getRestaurant = async (req, res, next) => {
   try {
+    // const data = await db.query(
+    //   `SELECT * from restaurants where id=${req.params.id}`
+    // );
     const data = await db.query(
-      `SELECT * from restaurants where id=${req.params.id}`
+      `SELECT * from restaurants left join (select restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) as average_rating from reviews group by restaurant_id) reviews on restaurants.id = reviews.restaurant_id where id=${req.params.id}`
     );
     const { rows } = data;
 
